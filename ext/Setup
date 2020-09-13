@@ -40,4 +40,4 @@
 #syslog
 #win32
 #win32ole
-#zlib
+zlib

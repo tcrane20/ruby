@@ -146,6 +146,7 @@ COMMONOBJS    = array.$(OBJEXT) \
 		vm_backtrace.$(OBJEXT) \
 		vm_dump.$(OBJEXT) \
 		vm_trace.$(OBJEXT) \
+		zlib.$(OBJEXT) \
 		$(COROUTINE_OBJ) \
 		$(DTRACE_OBJ) \
 		$(BUILTIN_ENCOBJS) \
