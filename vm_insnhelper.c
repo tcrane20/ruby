@@ -3773,9 +3773,9 @@ vm_check_if_class(ID id, rb_num_t flags, VALUE super, VALUE klass)
 	VALUE tmp = rb_class_real(RCLASS_SUPER(klass));
 
 	if (tmp != super) {
-	    rb_raise(rb_eTypeError,
-		     "superclass mismatch for class %"PRIsVALUE"",
+	    rb_warn("superclass mismatch for class %"PRIsVALUE"",
 		     rb_id2str(id));
+        return klass;
 	}
 	else {
 	    return klass;

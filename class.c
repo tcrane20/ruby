@@ -659,13 +659,15 @@ rb_define_class(const char *name, VALUE super)
 		     name, rb_obj_class(klass));
 	}
 	if (rb_class_real(RCLASS_SUPER(klass)) != super) {
-	    rb_raise(rb_eTypeError, "superclass mismatch for class %s", name);
+	    rb_warn("superclass mismatch for class %s", name);
+        goto override_class;
 	}
 
         /* Class may have been defined in Ruby and not pin-rooted */
         rb_vm_add_root_module(id, klass);
 	return klass;
     }
+    override_class:
     if (!super) {
 	rb_raise(rb_eArgError, "no super class for `%s'", name);
     }
@@ -730,16 +732,18 @@ rb_define_class_id_under(VALUE outer, ID id, VALUE super)
 		     outer, rb_id2str(id), rb_obj_class(klass));
 	}
 	if (rb_class_real(RCLASS_SUPER(klass)) != super) {
-	    rb_raise(rb_eTypeError, "superclass mismatch for class "
+	    rb_warn("superclass mismatch for class "
 		     "%"PRIsVALUE"::%"PRIsVALUE""
 		     " (%"PRIsVALUE" is given but was %"PRIsVALUE")",
 		     outer, rb_id2str(id), RCLASS_SUPER(klass), super);
+        goto override_class;
 	}
         /* Class may have been defined in Ruby and not pin-rooted */
         rb_vm_add_root_module(id, klass);
 
 	return klass;
     }
+    override_class:
     if (!super) {
 	rb_raise(rb_eArgError, "no super class for `%"PRIsVALUE"::%"PRIsVALUE"'",
 		 rb_class_path(outer), rb_id2str(id));
